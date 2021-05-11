@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * @author 0meag_0
  * JavaBean for JD Phone price page
  * 给京东手机价格页写的JavaBean
- * JD PhonePrice Page https://p.3.cn/prices/mgets?skuIds=J_100008348530
+ * JD PhonePrice Page Example [https://p.3.cn/prices/mgets?skuIds=J_100008348530]
  */
 
 public class PhonePrice {

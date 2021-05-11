@@ -2,6 +2,7 @@ package clawer;
 
 import clawer.pageProcessors.JDPage;
 import org.apache.log4j.Logger;
+import pipeline.MyPipeline;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.JsonFilePipeline;
 
@@ -18,10 +19,14 @@ public class Main {
         int pageNumber = 10;
         //爬取京东商品页面的前 pageNumber 页
         Spider spider = Spider.create(new JDPage());
-        //test(spider);
-        normal(spider,startPage,pageNumber);
-        spider.addPipeline(new JsonFilePipeline("D:\\data collection\\webmagic"));
-        spider.thread(3).run();
+
+        test(spider);
+        //process_normal(spider,startPage,pageNumber);
+
+
+        spider.addPipeline(new MyPipeline("D:\\data collection\\webmagic"));
+        //爬虫的线程数
+        spider.thread( 3 ).run();
 
     }
 
@@ -32,7 +37,7 @@ public class Main {
         spider.addUrl(testPage);
         spider.addUrl(testPage2);
     }
-    private static void normal(Spider spider,String startPage,int pageNumber){
+    private static void process_normal(Spider spider,String startPage,int pageNumber){
         for(int i=1; i<=pageNumber; i++){
             spider.addUrl(startPage+i);
         }
