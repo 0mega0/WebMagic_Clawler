@@ -14,6 +14,14 @@ public class Phone {
     private String comment_count;
     private String comment_rate;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -28,14 +36,6 @@ public class Phone {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {

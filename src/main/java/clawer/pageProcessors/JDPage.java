@@ -20,6 +20,7 @@ public class JDPage implements PageProcessor {
 
     private Site site = Site.me().setRetryTimes(3).setSleepTime(10000).setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15");
     private static final Logger log = Logger.getLogger(JDPage.class);
+    private Phone phone;
 
     public void process(Page page) {
         String url = page.getRequest().getUrl();
@@ -35,12 +36,9 @@ public class JDPage implements PageProcessor {
             }
             page.addTargetRequest(items.get(0));
             page.setSkip(true);
-//            for(String s:items){
-//                log.info(s);
-//            }
         } else if(url.startsWith("https://item.jd.com/")){
             //log.info("item page [" + url + "]");
-            Phone phone = new Phone();
+            phone = new Phone();
             phone.setId(url.replace("https://item.jd.com/", "").replace(".html", ""));
             phone.setUrl(url);
             phone.setImgUrl(page.getHtml().xpath("//*[@id='spec-img']/@data-origin").get());
@@ -53,11 +51,16 @@ public class JDPage implements PageProcessor {
             JDCommentHandler jdc = new JDCommentHandler(phone.getId());
             phone.setComment_rate(jdc.getCommentRate());
             phone.setComment_count(jdc.getCommentCount());
+            //图片部分，未处理
             //log.info(page.getHtml().xpath("//*[@id='spec-img']/@data-origin").all());
+
+            //将处理过的Phone都添加到PhoneList中，以待后续使用
             PipeOutputFactor.getInstance().getPhoneList().add(phone);
+            page.putField("PHONES_INFO",phone);
 
         }
-        page.putField("PHONES_INFO",PipeOutputFactor.getInstance().getPhoneList());
+        //之前想的是让所有的phone全都存到同一个文件中，方便统计观看。后面需求变化，要每个手机存在一个文件里，这段代码就废弃了。
+        //page.putField("PHONES_INFO",PipeOutputFactor.getInstance().getPhoneList());
 
     }
 
