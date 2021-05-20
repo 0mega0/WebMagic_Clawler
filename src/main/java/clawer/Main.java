@@ -81,7 +81,7 @@ public class Main {
                     break;
                 case "4":
                     System.out.println("输入关键词和参数字段");
-                    lq.booleanQuery("三星", "TITLE:120HZ");
+                    lq.booleanQuery(in.readLine(), in.readLine());
                     pressAnyKeyToContinue();
                     break;
                 case "5":
